@@ -1,6 +1,7 @@
 import './style.css';
 import './course-theme.css';
 import './course-theme.js';
+import { observeCode } from './highlight.js';
 import { renderMarkdown } from './markdown.js';
 import { createEventParser } from '../shared/sse.js';
 import {
@@ -24,6 +25,7 @@ function result(value: string, markdown = false) {
   else text('result', value);
   $('result').classList.toggle('markdown', markdown);
 }
+observeCode();
 let liveAvailable = false,
   busy = false;
 let controller: AbortController | undefined;

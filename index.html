@@ -292,7 +292,7 @@ What project name and codeword did we discuss? Answer in one sentence without re
         <div class="guide-grid">
           <article class="panel">
             <h3>A retained query connects the parts</h3>
-            <pre><code>const q = query({ prompt: input, options });
+            <pre data-lang="ts"><code>const q = query({ prompt: input, options });
 await q.initializationResult();
 await q.setMcpServers({ project: server });
 await q.mcpServerStatus();
@@ -306,7 +306,7 @@ await q.supportedAgents();
           </article>
           <article class="panel">
             <h3>Continue a branch deliberately</h3>
-            <pre><code>const branch = await forkSession(sourceId, {
+            <pre data-lang="ts"><code>const branch = await forkSession(sourceId, {
   dir, sessionStore, title: 'Alternative review'
 });
 const q = query({
