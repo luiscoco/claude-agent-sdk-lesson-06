@@ -1,0 +1,15 @@
+{
+  "project": "Aurora Tasks",
+  "risks": [
+    {
+      "title": "Unknown task ID behavior",
+      "impact": "Completion may silently fail or report an inconsistent result.",
+      "nextStep": "Specify behavior and write one focused domain test."
+    },
+    {
+      "title": "Volatile storage",
+      "impact": "Tasks disappear after process exit.",
+      "nextStep": "Add a storage adapter after domain behavior is tested."
+    }
+  ]
+}

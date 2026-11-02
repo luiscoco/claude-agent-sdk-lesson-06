@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f4f7f7" />
+    <title>Lesson 06 · MCP Session Workshop</title>
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/"
+        ><span class="brand-icon">{ }</span
+        ><span>MCP Session Workshop<small>LESSON 06</small></span></a
+      >
+      <div class="top-links">
+        <span class="version">SDK 0.3.310</span
+        ><a href="https://github.com/luiscoco/claude-agent-sdk-lesson-06">View source ↗</a>
+      </div>
+    </header>
+    <main>
+      <section class="hero">
+        <div>
+          <p class="eyebrow">MCP, SUBAGENTS &amp; SESSIONS</p>
+          <h1>Connect capabilities.<br /><span>Keep the context.</span></h1>
+          <p class="intro">
+            Inspect a tool connection. Delegate a focused review.<br class="desktop" />
+            Save the conversation, then continue or explore a branch.
+          </p>
+          <div class="hero-badges">
+            <span class="pill">● Connect · Specialize · Continue</span
+            ><span>Claude Agent SDK · TypeScript 0.3.310</span>
+          </div>
+        </div>
+        <aside class="lesson-card">
+          <strong>06<span> / 09</span></strong>
+          <h2>Tools, specialists, history.</h2>
+          <p>Different capabilities.<br />One deliberate host lifecycle.</p>
+          <hr />
+          <small>A course companion by<br /><b>Luis Coco Enríquez</b></small>
+        </aside>
+      </section>
+      <nav class="tabs" role="tablist" aria-label="Lesson activities">
+        <button role="tab" aria-selected="true" aria-controls="connections" id="tab-connections">
+          01 <span>Connection lab</span></button
+        ><button
+          role="tab"
+          aria-selected="false"
+          aria-controls="library"
+          id="tab-library"
+          tabindex="-1"
+        >
+          02 <span>Session library</span></button
+        ><button
+          role="tab"
+          aria-selected="false"
+          aria-controls="guide"
+          id="tab-guide"
+          tabindex="-1"
+        >
+          03 <span>Concept guide</span></button
+        ><button role="tab" aria-selected="false" aria-controls="quiz" id="tab-quiz" tabindex="-1">
+          04 <span>Knowledge check</span>
+        </button>
+      </nav>
+      <div id="notice" role="alert" hidden></div>
+      <section id="connections" role="tabpanel" aria-labelledby="tab-connections">
+        <div id="transport-cards" class="transport-grid"></div>
+        <div class="mode-banner">
+          <div>
+            <strong>Local inspection is real MCP. Live workflows add the agent.</strong>
+            <p>
+              SDK-hosted and stdio inspection need no key. Live runs use a retained query handle and
+              save private history.
+            </p>
+          </div>
+          <span id="key-status" class="tag">CHECKING LIVE SETUP</span>
+        </div>
+        <div class="workbench workflow-grid">
+          <aside class="panel controls">
+            <p class="eyebrow muted">CONNECT THE CAPABILITY</p>
+            <h2>One project note tool</h2>
+            <label for="transport">Executable transport</label
+            ><select id="transport">
+              <option value="sdk">SDK-hosted · in process</option>
+              <option value="stdio">stdio · local Node process</option>
+            </select>
+            <p class="hint">
+              Both expose the same bounded Aurora Tasks notes. Remote HTTP/SSE are configuration
+              examples only.
+            </p>
+            <button id="inspect" class="secondary">Inspect connection</button>
+            <div class="control-group">
+              <p class="eyebrow muted">OPTIONAL · REAL SDK</p>
+              <h3>Run a saved conversation</h3>
+              <label for="prompt">New-session task</label><textarea id="prompt" rows="5"></textarea>
+              <p class="hint" id="live-note">Checking server-side live availability…</p>
+              <button id="new-session" class="primary" disabled>
+                Create live session <span>→</span></button
+              ><button id="delegate" class="secondary spaced" disabled>
+                Delegate a risk review
+              </button>
+              <p class="hint">
+                Discovery does not launch an agent. Delegation enables one configured read-only
+                specialist and waits for its report.
+              </p>
+              <button id="stop" class="danger" hidden>Stop this workflow</button>
+            </div>
+            <div class="boundary-note">
+              <b>Private, owned history</b>
+              <p>
+                Only this workshop’s sessions appear. Recorded fixtures are clearly labeled. The
+                pinned alpha SessionStore mirror keeps history API calls inside ignored local
+                storage.
+              </p>
+            </div>
+          </aside>
+          <div class="observation">
+            <section class="panel">
+              <div class="panel-heading">
+                <div>
+                  <p class="eyebrow muted">CONNECTION HEALTH ≠ PERMISSION</p>
+                  <h2>MCP evidence</h2>
+                </div>
+                <span class="status" id="connection-status">Not inspected</span>
+              </div>
+              <div class="result-box">
+                <p id="connection-summary">
+                  Choose a transport and inspect the actual initialize, discovery, and tool-call
+                  round trip.
+                </p>
+                <pre id="connection-result" hidden></pre>
+              </div>
+            </section>
+            <section class="panel">
+              <div class="panel-heading">
+                <div>
+                  <p class="eyebrow muted">DISCOVERY ≠ EXECUTION</p>
+                  <h2>Live workflow outcome</h2>
+                </div>
+                <span class="status" id="status">No live run</span>
+              </div>
+              <div class="metrics">
+                <div><strong id="tool-reads">—</strong><span>completed tool reads</span></div>
+                <div><strong id="agent-starts">—</strong><span>actual agent starts</span></div>
+                <div>
+                  <strong id="agent-discovered">—</strong><span>specialists discovered</span>
+                </div>
+              </div>
+              <div class="result-box">
+                <p id="result">
+                  Create a live session or delegate a risk review. The saved conversation will
+                  appear in the library.
+                </p>
+                <p id="run-meta" class="hint"></p>
+                <button id="view-saved" class="text-button" disabled>
+                  Inspect saved session ↗
+                </button>
+              </div>
+            </section>
+            <section class="panel stream">
+              <div class="panel-heading">
+                <div>
+                  <p class="eyebrow muted">ONE RETAINED QUERY HANDLE</p>
+                  <h2>Workflow event log</h2>
+                </div>
+                <button id="export" class="text-button" disabled>Export trace ↓</button>
+              </div>
+              <div id="events" class="workflow-events" aria-label="Workflow events">
+                <div class="empty">
+                  <span>↳</span>
+                  <h3>Connect, discover, then act</h3>
+                  <p>Runtime controls and real delegation<br />have separate event labels.</p>
+                </div>
+              </div>
+              <p class="stream-footer">
+                Selected fields only. No server credentials, raw environment values, or full SDK
+                envelopes.
+              </p>
+            </section>
+          </div>
+        </div>
+      </section>
+      <section id="library" role="tabpanel" aria-labelledby="tab-library" hidden>
+        <div class="library-heading">
+          <div>
+            <p class="eyebrow">CONVERSATION CONTEXT, PRESERVED</p>
+            <h2>Your workshop sessions</h2>
+            <p>
+              Recorded fixtures support real SDK history operations without a model. Live sessions
+              can also be resumed.
+            </p>
+          </div>
+          <div class="library-actions">
+            <button id="seed">Load recorded fixture</button
+            ><button id="refresh">Refresh library</button>
+          </div>
+        </div>
+        <div class="library-layout">
+          <aside class="session-list panel" id="session-list" aria-label="Owned sessions">
+            <p class="empty-library">Loading the private session library…</p>
+          </aside>
+          <div id="session-detail" class="panel detail-panel">
+            <div id="no-selection" class="empty">
+              <span>↳</span>
+              <h3>Choose a saved conversation</h3>
+              <p>
+                Load a recorded fixture or create a live session.<br />No unrelated Claude history
+                is listed.
+              </p>
+            </div>
+            <div id="selected-content" hidden>
+              <div class="panel-heading">
+                <div>
+                  <p class="eyebrow muted" id="session-origin">OWNED SESSION</p>
+                  <h2 id="session-title"></h2>
+                </div>
+                <span id="session-tag" class="tag"></span>
+              </div>
+              <div class="session-identity">
+                <code id="session-id"></code><span id="session-parent"></span>
+              </div>
+              <div class="history-controls">
+                <div>
+                  <label for="rename-title">Session title</label
+                  ><input id="rename-title" maxlength="80" /><button id="rename">Rename</button>
+                </div>
+                <div>
+                  <label for="tag-value">Session tag</label
+                  ><input id="tag-value" maxlength="30" /><button id="tag">Apply tag</button>
+                </div>
+                <div>
+                  <label for="fork-title">New branch title</label
+                  ><input id="fork-title" maxlength="80" value="Alternative review branch" /><button
+                    id="fork"
+                  >
+                    Fork conversation
+                  </button>
+                </div>
+              </div>
+              <div class="resume-panel">
+                <label for="follow-up">Continue the selected live conversation</label
+                ><textarea id="follow-up" rows="2">
+What project name and codeword did we discuss? Answer in one sentence without reading tools.</textarea
+                ><button id="resume" class="secondary" disabled>
+                  Resume selected live session
+                </button>
+                <p class="hint" id="resume-note">
+                  Recorded fixtures are not offered as live conversations.
+                </p>
+              </div>
+              <div class="history-messages">
+                <h3>Main conversation</h3>
+                <p class="hint">
+                  First 50 selected user/assistant messages. Full transcript data stays on the
+                  server.
+                </p>
+                <div id="messages"></div>
+              </div>
+              <div class="history-messages">
+                <h3>Specialist history</h3>
+                <div id="subagent-messages"></div>
+              </div>
+              <div class="delete-area">
+                <button id="delete" class="danger">Delete this owned session</button>
+                <div id="delete-confirm" hidden>
+                  <p id="delete-label"></p>
+                  <p class="hint">
+                    This removes the workshop’s mirrored transcript and specialist history.
+                    Independent forks and the SDK’s private local copy remain.
+                  </p>
+                  <div>
+                    <button id="cancel-delete">Keep session</button
+                    ><button id="confirm-delete" class="danger">Confirm deletion</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="guide" role="tabpanel" aria-labelledby="tab-guide" hidden>
+        <div class="section-intro">
+          <p class="eyebrow">DISTINCT SURFACES, CONNECTED LIFECYCLES</p>
+          <h2>Capabilities, specialists, and saved context.</h2>
+          <p>
+            The sample follows the installed 0.3.310 signatures. Its SessionStore adapter is
+            explicitly alpha and deliberately scoped to this workshop.
+          </p>
+        </div>
+        <div id="guide-cards" class="method-cards"></div>
+        <div class="guide-grid">
+          <article class="panel">
+            <h3>A retained query connects the parts</h3>
+            <pre><code>const q = query({ prompt: input, options });
+await q.initializationResult();
+await q.setMcpServers({ project: server });
+await q.mcpServerStatus();
+await q.supportedAgents();
+// Queue the task, consume typed messages,
+// then close the query in finally.</code></pre>
+            <p class="hint">
+              The workflow consumer runs alongside runtime control requests. Discovery is complete
+              before user input is submitted.
+            </p>
+          </article>
+          <article class="panel">
+            <h3>Continue a branch deliberately</h3>
+            <pre><code>const branch = await forkSession(sourceId, {
+  dir, sessionStore, title: 'Alternative review'
+});
+const q = query({
+  prompt: input,
+  options: { resume: branch.sessionId,
+    persistSession: true, sessionStore }
+});</code></pre>
+            <p>
+              Forking preserves the original conversation. Session history does not restore
+              filesystem state.
+            </p>
+            <a
+              href="https://github.com/luiscoco/claude-agent-sdk-lesson-06/blob/main/docs/lesson-6-walkthrough.md"
+              >Open the classroom walkthrough ↗</a
+            >
+          </article>
+        </div>
+      </section>
+      <section id="quiz" role="tabpanel" aria-labelledby="tab-quiz" hidden>
+        <div class="section-intro">
+          <p class="eyebrow">CHECK YOUR UNDERSTANDING</p>
+          <h2>Can you explain which API to choose?</h2>
+          <p>Try both transports and inspect a session branch, then answer these four questions.</p>
+        </div>
+        <form id="quiz-form">
+          <div id="questions"></div>
+          <button class="primary" type="submit">Check my answers</button>
+          <p id="quiz-score" role="status"></p>
+        </form>
+      </section>
+    </main>
+    <footer>
+      <span>Lesson 6 · MCP, Subagents and Sessions</span
+      ><span
+        >Luis Coco Enríquez · MIT licensed ·
+        <a href="https://github.com/luiscoco/claude-agent-sdk-lesson-05"
+          >Lesson 5 companion ↗</a
+        ></span
+      >
+    </footer>
+    <script type="module" src="/src/client/main.ts"></script>
+  </body>
+</html>
