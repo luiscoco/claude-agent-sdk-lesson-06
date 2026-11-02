@@ -4,7 +4,7 @@ A hands-on companion to **Claude Agent SDK TypeScript version 0.3.310**, by Luis
 
 Learn **Lesson 6: MCP, Subagents and Sessions** by connecting a real MCP capability, discovering and invoking a specialist, and organizing saved conversation history. The workshop includes local activities without a model account and optional real SDK workflows.
 
-![MCP Session Workshop after a real delegated review](docs/mcp-session-workshop.png)
+![Refreshed course interface with larger text](docs/visual-refresh-desktop.png)
 
 ## Run locally
 
@@ -172,3 +172,5 @@ On Linux, use `npx playwright install --with-deps chromium` if needed. GitHub Ac
 Online documentation evolves; this sample's contract is the pinned 0.3.310 package. Previous sample: [Lesson 5 Tool Policy Lab](https://github.com/luiscoco/claude-agent-sdk-lesson-05).
 
 MIT © Luis Coco Enríquez. Independent educational sample; not an official Anthropic product.
+
+See [visual style and reading controls](docs/visual-style.md) for the refreshed reference palette, larger typography, and persistent text-size setting.
