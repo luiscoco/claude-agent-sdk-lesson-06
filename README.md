@@ -1,4 +1,4 @@
-# Lesson 06 · MCP Session Workshop
+# Lesson 06 MCP Session Workshop
 
 A hands-on companion to **Claude Agent SDK TypeScript version 0.3.310**, by Luis Coco Enríquez.
 
