@@ -1,6 +1,7 @@
 import './style.css';
 import './course-theme.css';
 import './course-theme.js';
+import { renderMarkdown } from './markdown.js';
 import { createEventParser } from '../shared/sse.js';
 import {
   TRANSPORTS,
@@ -17,6 +18,12 @@ const $ = <T extends HTMLElement = HTMLElement>(id: string) => document.getEleme
 const text = (id: string, value: string) => {
   $(id).textContent = value;
 };
+// Model text is rendered as Markdown; status and error copy stays plain text.
+function result(value: string, markdown = false) {
+  if (markdown) renderMarkdown($('result'), value);
+  else text('result', value);
+  $('result').classList.toggle('markdown', markdown);
+}
 let liveAvailable = false,
   busy = false;
 let controller: AbortController | undefined;
@@ -94,8 +101,11 @@ function messageList(parent: HTMLElement, messages: Detail['messages']) {
     article.className = 'history-message';
     const role = document.createElement('small');
     role.textContent = message.type;
-    const content = document.createElement('p');
-    content.textContent = message.text;
+    const content = document.createElement(message.type === 'assistant' ? 'div' : 'p');
+    if (message.type === 'assistant') {
+      content.className = 'markdown';
+      renderMarkdown(content, message.text);
+    } else content.textContent = message.text;
     article.append(role, content);
     parent.append(article);
   }
@@ -310,7 +320,7 @@ async function workflow(config: RunConfig) {
   runConfig = config;
   $('events').replaceChildren();
   text('status', 'Running');
-  text('result', 'Waiting for the live workflow…');
+  result('Waiting for the live workflow…');
   text('run-meta', '');
   for (const id of ['tool-reads', 'agent-starts', 'agent-discovered']) text(id, '—');
   activate('connections');
@@ -334,7 +344,7 @@ async function workflow(config: RunConfig) {
       append(event);
       if (event.kind === 'result') {
         report = event.data as RunReport;
-        text('result', report.text);
+        result(report.text, true);
         text('tool-reads', String(report.toolReads));
         text('agent-starts', String(report.agentStarts));
         text('agent-discovered', String(report.agents.length));
@@ -343,7 +353,7 @@ async function workflow(config: RunConfig) {
           `Session ${report.sessionId.slice(0, 8)} · ${report.transport} · reported estimated cost $${report.costUsd.toFixed(4)}`,
         );
       }
-      if (event.kind === 'error') text('result', event.detail);
+      if (event.kind === 'error') result(event.detail);
       if (event.kind === 'done') {
         finished = true;
         text(
@@ -371,7 +381,7 @@ async function workflow(config: RunConfig) {
       ? 'The live workflow was cancelled. Final execution counters are unknown.'
       : (error as Error).message;
     text('status', cancelled ? 'Cancelled' : 'Failed');
-    text('result', detail);
+    result(detail);
     append({ kind: 'error', title: cancelled ? 'Cancelled' : 'Workflow failed', detail });
   } finally {
     controller = undefined;
